@@ -20,24 +20,11 @@ public class DrinkMachine1Dao {
 	}
 
 	//@Override
-<<<<<<< HEAD
-	public void insertOne(ItemDto itemDto) throws DataAccessException {
-
-		//１件登録。登録、更新、削除はupdateを使う。第一引数はSQL、第二はPreparedStatement。
-		jdbc.update("INSERT INTO ITEM(name, unitPrice, count, IsPr, RecordDate)"
-				+ "VALUES(?, ?, ?, ?, ?)" ,
-				itemDto.getDtoName(),
-				itemDto.getDtoUnitPrice(),
-				itemDto.getDtoCount(),
-				itemDto.getDtoIsPr(),
-				itemDto.getDtoRecordDate());
-=======
 	public void insertOne() throws DataAccessException {
 
 		//１件登録。登録、更新、削除はupdateを使う。第一引数はSQL、第二はPreparedStatement。
 		jdbc.update("INSERT INTO ITEM(name, unitPrice, count, IsPr, RecordDate)"
 				+ "VALUES('ハチワレ', 600, 20, 1, '2022-10-10 00:00:19')");
->>>>>>> branch 'test' of https://github.com/BKSMU/ForHH
 
 		//    			int rowNumber = jdbc.update("INSERT INTO m_user(user_id,"
 		//    	                + " password,"
