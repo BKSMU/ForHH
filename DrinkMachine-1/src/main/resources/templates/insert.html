@@ -7,11 +7,11 @@
 <body>
    
    <h2>登録完了</h2>
-   <p th:text= "'名前：' + ${bean.getDtoName}" >
-   <p th:text= "'年齢：' + ${bean.getDtoUnitPrice}" >
-   <p th:text= "'数量：' + ${bean.getDtoCount}" >
-   <p th:text= "'フラグ：' + ${bean.getDtoIsPr}" >
-   <p th:text= "'登録時間：' + ${bean.dtoRecordDate}" >
+   <p th:text= "'名前：' + ${bean.getName}" >
+   <p th:text= "'年齢：' + ${bean.getUnitPrice}" >
+   <p th:text= "'数量：' + ${bean.getCount}" >
+   <p th:text= "'フラグ：' + ${bean.getIsPr}" >
+   <p th:text= "'登録時間：' + ${bean.getRecordDate}" >
    
    <p><a href="/">ホームに戻る</a>
 </body>

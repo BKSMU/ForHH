@@ -25,16 +25,16 @@ public class Drinkmachine1Controller {
 	 public String insert(@ModelAttribute Bean bean, Model model){
 		
 		
-		ItemDto itemDto = new ItemDto();
-		itemDto.setDtoName(bean.getName());
-		itemDto.setDtoUnitPrice(bean.getUnitPrice());
-		itemDto.setDtoCount(bean.getCount());
-		itemDto.setDtoIsPr(bean.getIsPr());
-		itemDto.setDtoRecordDate(new Date());
+//		ItemDto itemDto = new ItemDto();
+//		itemDto.setDtoName(bean.getName());
+//		itemDto.setDtoUnitPrice(bean.getUnitPrice());
+//		itemDto.setDtoCount(bean.getCount());
+//		itemDto.setDtoIsPr(bean.getIsPr());
+		bean.setRecordDate(new Date());
 		
-		Dmd.insertOne(itemDto);
+		Dmd.insertOne(bean);
 		
-		model.addAttribute("bean",itemDto);
+		model.addAttribute("bean",bean);
 		
 	 return "insert";
 	 }

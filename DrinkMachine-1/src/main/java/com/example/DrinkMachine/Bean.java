@@ -1,6 +1,6 @@
 package com.example.DrinkMachine;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Bean {
 
@@ -8,7 +8,7 @@ public class Bean {
 	private int unitPrice;
 	private int count;
 	private int isPr;
-	private LocalDateTime recordDate;
+	private Date recordDate;
 	
 	
 	public String getName() {
@@ -35,10 +35,10 @@ public class Bean {
 	public void setIsPr(int isPr) {
 		this.isPr = isPr;
 	}
-	public LocalDateTime getRecordDate() {
+	public Date getRecordDate() {
 		return recordDate;
 	}
-	public void setRecordDate(LocalDateTime recordDate) {
+	public void setRecordDate(Date recordDate) {
 		this.recordDate = recordDate;
 	}
 
