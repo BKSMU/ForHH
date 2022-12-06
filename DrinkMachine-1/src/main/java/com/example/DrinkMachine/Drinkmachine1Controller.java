@@ -2,6 +2,7 @@ package com.example.DrinkMachine;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Drinkmachine1Controller {
 	@Autowired
 	DrinkMachine1Dao Dmd;
+	
+	
 	
 	@GetMapping("/")
 	 public String home(Model model){
@@ -40,8 +43,10 @@ public class Drinkmachine1Controller {
 	 }
 	
 	@RequestMapping("/read")
-	 public String read(){
+	 public String read(@ModelAttribute Bean bean, Model model){
+		List<Bean> searchList = Dmd.search();
 		
+		model.addAttribute("searchList", searchList);
 		
 	 return "read";
 	 }

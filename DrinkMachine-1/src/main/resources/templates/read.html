@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>読み込み画面</title>
+<meta charset="UTF-8">
+<title>読み込み画面</title>
 </head>
 <body>
-   
-   <button>読み込み完了</button>
+
+	<button onclick="location.href='/'">登録画面</button>
+
+	<h2>検索一覧</h2>
+	<th:block th:each="seach : ${searchList}">
+		<p th:text="'商品コード：' + ${seach.getCode}">
+		<p th:text="'名前：' + ${seach.getName}">
+		<p th:text="'年齢：' + ${seach.getUnitPrice}">
+		<p th:text="'数量：' + ${seach.getCount}">
+		<p th:text="'フラグ：' + ${seach.getIsPr}">
+		<p th:text="'登録時間：' + ${seach.getRecordDate}">
+	</th:block>
 </body>
 </html>

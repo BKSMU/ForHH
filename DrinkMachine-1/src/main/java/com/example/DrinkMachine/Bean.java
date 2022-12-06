@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Bean {
 
+	private int code;
 	private String name;
 	private int unitPrice;
 	private int count;
@@ -11,6 +12,12 @@ public class Bean {
 	private Date recordDate;
 	
 	
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
 	public String getName() {
 		return name;
 	}

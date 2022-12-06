@@ -1,5 +1,10 @@
 package com.example.DrinkMachine;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,21 +36,27 @@ public class DrinkMachine1Dao {
 				bean.getIsPr(),
 				bean.getRecordDate());
 		
-//	public void insertOne() throws DataAccessException {
-//
-//		//１件登録。登録、更新、削除はupdateを使う。第一引数はSQL、第二はPreparedStatement。
-//		jdbc.update("INSERT INTO ITEM(name, unitPrice, count, IsPr, RecordDate)"
-//				+ "VALUES('ハチワレ', 600, 20, 1, '2022-10-10 00:00:19')");
+	}
+	
+	public List<Bean> search() {
+		String sql = "SELECT * FROM ITEM";
+		List<Map<String,Object>> searches = jdbc.queryForList(sql);
+		
+		List<Bean> serchList = new ArrayList<Bean>();
+		for (Map<String,Object> search : searches) {
+			Bean bean = new Bean();
+			bean.setCode((int)search.get("CODE"));
+			bean.setName((String)search.get("NAME"));
+			bean.setUnitPrice((int)search.get("UNITPRICE"));
+			bean.setCount((int)search.get("COUNT"));
+			bean.setIsPr((int)search.get("ISPR"));
+			bean.setRecordDate((Date)search.get("RECORDDATE"));
+			
+			serchList.add(bean);
 
-		//    			int rowNumber = jdbc.update("INSERT INTO m_user(user_id,"
-		//    	                + " password,"
-		//    	                + " user_name,"
-		//    	                + " birthday,"
-		//    	                + " age,"
-		//    	                + " marriage,"
-		//    	                + " role)"
-		//    	                + " VALUES(?, ?, ?, ?, ?, ?, ?)",
-
-		//正常終了なら０を返す。異常は０以外を返す。
+		}
+		
+		return serchList;
+		
 	}
 }
