@@ -51,7 +51,8 @@ public class Drinkmachine1Controller {
 	 return "read";
 	 }
 	@RequestMapping("/delete")
-	 public String delete(){
+	 public String delete(int code){
+		Dmd.delete(code);
 	 return "delete";
 	 }
 }

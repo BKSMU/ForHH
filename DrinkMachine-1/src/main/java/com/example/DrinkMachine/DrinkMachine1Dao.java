@@ -59,4 +59,22 @@ public class DrinkMachine1Dao {
 		return serchList;
 		
 	}
+	
+	public int delete(int code) throws DataAccessException {
+
+	    //１件削除
+	    int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = ?", code);
+//		int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = 1");
+		
+	    return rowNumber;
+	}
+	
+//	public int delete(int code) throws DataAccessException {
+//
+//	    //１件削除
+////	    int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = ?", code);
+//		int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = ?", code);
+//		
+//	    return rowNumber;
+//	}
 }

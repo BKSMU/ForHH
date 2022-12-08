@@ -17,7 +17,9 @@
 	<form method="post" action="/read">
 		<button>読み込み</button>
 	</form>
-	<form method="post" action="/delete">
+	
+	<form th:action="@{/delete}" th:object="${bean}" method="post">
+		<p>商品コード<input type="text" th:field="*{code}" /></p>
 		<button>削除</button>
 	</form>
 
