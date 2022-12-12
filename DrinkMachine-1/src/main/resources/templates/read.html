@@ -11,10 +11,10 @@
 	<h2>検索一覧</h2>
 	<th:block th:each="seach : ${searchList}">
 		<p th:text="'商品コード：' + ${seach.getCode}">
-		<p th:text="'名前：' + ${seach.getName}">
-		<p th:text="'年齢：' + ${seach.getUnitPrice}">
+		<p th:text="'商品名：' + ${seach.getName}">
+		<p th:text="'金額：' + ${seach.getUnitPrice}">
 		<p th:text="'数量：' + ${seach.getCount}">
-		<p th:text="'フラグ：' + ${seach.getIsPr}">
+		<p th:text="'おすすめフラグ：' + ${seach.getIsPr}">
 		<p th:text="'登録時間：' + ${seach.getRecordDate}">
 	</th:block>
 </body>

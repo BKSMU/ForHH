@@ -40,10 +40,10 @@ public class DrinkMachine1Dao {
 	
 	public List<Bean> search() {
 		String sql = "SELECT * FROM ITEM";
-		List<Map<String,Object>> searches = jdbc.queryForList(sql);
+		List<Map<String,Object>> searcheALL = jdbc.queryForList(sql);
 		
-		List<Bean> serchList = new ArrayList<Bean>();
-		for (Map<String,Object> search : searches) {
+		List<Bean> serchList = new ArrayList<>();
+		for (Map<String,Object> search : searcheALL) {
 			Bean bean = new Bean();
 			bean.setCode((int)search.get("CODE"));
 			bean.setName((String)search.get("NAME"));
@@ -60,21 +60,31 @@ public class DrinkMachine1Dao {
 		
 	}
 	
+	public Bean searchOne(int code) throws DataAccessException {
+
+		String sql = "SELECT code, name, unitPrice, count, IsPr, RecordDate " +  "FROM ITEM " +  "WHERE code = " + code ;
+		
+//		queryForMap 結果マップのクエリを実行
+		Map<String,Object> searcheOne = jdbc.queryForMap(sql);
+		Bean bean = new Bean();
+		bean.setCode((int)searcheOne.get("CODE"));
+		bean.setName((String)searcheOne.get("NAME"));
+		bean.setUnitPrice((int)searcheOne.get("UNITPRICE"));
+		bean.setCount((int)searcheOne.get("COUNT"));
+		bean.setIsPr((int)searcheOne.get("ISPR"));
+		bean.setRecordDate((Date)searcheOne.get("RECORDDATE"));
+		
+	    return bean;
+	}
+	
 	public int delete(int code) throws DataAccessException {
 
 	    //１件削除
 	    int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = ?", code);
-//		int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = 1");
 		
 	    return rowNumber;
 	}
 	
-//	public int delete(int code) throws DataAccessException {
-//
-//	    //１件削除
-////	    int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = ?", code);
-//		int rowNumber = jdbc.update("DELETE FROM ITEM WHERE code = ?", code);
-//		
-//	    return rowNumber;
-//	}
+	
+	
 }

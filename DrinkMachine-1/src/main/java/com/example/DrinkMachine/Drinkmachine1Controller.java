@@ -55,4 +55,11 @@ public class Drinkmachine1Controller {
 		Dmd.delete(code);
 	 return "delete";
 	 }
+	
+	@RequestMapping("/searchOne")
+	 public String searchOne(int code, Model model){
+		Bean searchOne = Dmd.searchOne(code);
+		model.addAttribute("searchOne", searchOne);
+	 return "searchOne";
+	 }
 }
