@@ -1,7 +1,7 @@
 package com.example.DrinkMachine;
 
 
-import java.util.Date;
+import java.util.Date;//localtimestamp型に変更しよう
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +61,13 @@ public class Drinkmachine1Controller {
 		Bean searchOne = Dmd.searchOne(code);
 		model.addAttribute("searchOne", searchOne);
 	 return "searchOne";
+	 }
+	
+	@RequestMapping("/update")
+	 public String update(@ModelAttribute Bean bean){
+		
+		bean.setRecordDate(new Date());
+		Dmd.update(bean);
+	 return "update";
 	 }
 }
