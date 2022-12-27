@@ -1,7 +1,7 @@
 package com.example.DrinkMachine;
 
 
-import java.util.Date;//localtimestamp型に変更しよう
+import java.time.LocalDateTime;//localtimestamp型に変更しよう
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 @Controller
 public class Drinkmachine1Controller {
-	@Autowired
-	DrinkMachine1Dao Dmd;
 	
+	
+	@Autowired
+	private DrinkMachine1Service service;
 	
 	
 	@GetMapping("/")
@@ -27,47 +31,69 @@ public class Drinkmachine1Controller {
 	@PostMapping("/insert")
 	 public String insert(@ModelAttribute Bean bean, Model model){
 		
+		ItemDto dto = new ItemDto();
+		dto.setName(bean.getName());
+		dto.setCount(bean.getCount());
+		dto.setUnitPrice(bean.getUnitPrice());
+		dto.setIsPr(bean.getIsPr());
+		dto.setRecordDate(LocalDateTime.now());
 		
-//		ItemDto itemDto = new ItemDto();
-//		itemDto.setDtoName(bean.getName());
-//		itemDto.setDtoUnitPrice(bean.getUnitPrice());
-//		itemDto.setDtoCount(bean.getCount());
-//		itemDto.setDtoIsPr(bean.getIsPr());
-		bean.setRecordDate(new Date());
+		 service.insertOne(dto);
 		
-		Dmd.insertOne(bean);
-		
-		model.addAttribute("bean",bean);
+		model.addAttribute("bean",dto);
 		
 	 return "insert";
 	 }
 	
 	@RequestMapping("/read")
-	 public String read(@ModelAttribute Bean bean, Model model){
-		List<Bean> searchList = Dmd.search();
-		
-		model.addAttribute("searchList", searchList);
+	 public String read(Model model){
+		List<ItemDto> searchAllList = service.searchALL();
+		model.addAttribute("searchAllList", searchAllList);
 		
 	 return "read";
 	 }
-	@RequestMapping("/delete")
-	 public String delete(int code){
-		Dmd.delete(code);
+	
+	@RequestMapping(value = "/delete", params = "delete", method = RequestMethod.POST)
+	 public String delete(@RequestParam("code") int code){
+		service.delete(code);
 	 return "delete";
 	 }
 	
 	@RequestMapping("/searchOne")
 	 public String searchOne(int code, Model model){
-		Bean searchOne = Dmd.searchOne(code);
-		model.addAttribute("searchOne", searchOne);
+		List<ItemDto> search = service.searchOne(code);
+		
+		Bean bean = new Bean();
+		for (int i = 0; i < search.size(); i++) {
+			bean.setCode(search.get(i).getCode());
+			bean.setName(search.get(i).getName());
+			bean.setUnitPrice(search.get(i).getUnitPrice());
+			bean.setCount(search.get(i).getCount());
+			bean.setIsPr(search.get(i).getIsPr());
+			bean.setRecordDate(search.get(i).getRecordDate());
+			
+		}
+		
+		model.addAttribute("bean", bean);
+		
 	 return "searchOne";
 	 }
 	
-	@RequestMapping("/update")
-	 public String update(@ModelAttribute Bean bean){
+	@PostMapping(value = "/update", params = "update")
+	 public String update(@ModelAttribute Bean bean, Model model){
 		
-		bean.setRecordDate(new Date());
-		Dmd.update(bean);
+		ItemDto dto = new ItemDto();
+		dto.setName(bean.getName());
+		dto.setCount(bean.getCount());
+		dto.setUnitPrice(bean.getUnitPrice());
+		dto.setIsPr(bean.getIsPr());
+		dto.setRecordDate(LocalDateTime.now());
+		
+		service.update(dto);
+		
+		List<ItemDto> search = service.searchOne(bean.getCode());
+		model.addAttribute("searchAllList", search);
+		
 	 return "update";
 	 }
 }

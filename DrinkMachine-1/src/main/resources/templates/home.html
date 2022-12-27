@@ -16,15 +16,15 @@
 	</form>
 	
 	
-	<form th:action="@{/delete}" th:object="${bean}" method="post">
+	<!-- <form th:object="${bean}" method="post">
 		<p>商品コード<input type="text" th:field="*{code}" /></p>
-		<button>削除</button>
-	</form>
-	
-	<form th:action="@{/searchOne}" th:object="${bean}" method="post">
+		<button type="submit"  formaction="/delete" name="delete">削除</button>
+	</form> -->
+	<!-- <form th:action="@{/searchOne}" th:object="${bean}" method="post">
 		<p>商品コード<input type="text" th:field="*{code}" /></p>
 		<button>表示</button>
-	</form>
+	</form> -->
+	
 
 	<form method="post" action="/read">
 		<button>一覧表示</button>

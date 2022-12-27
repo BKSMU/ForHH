@@ -1,7 +1,7 @@
 package com.example.DrinkMachine;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,35 +25,37 @@ public class DrinkMachine1Dao {
 	}
 
 	//@Override
-	public void insertOne(Bean bean) throws DataAccessException {
-
+	public int insertOne(ItemDto dto) throws DataAccessException {
+		int result = 0;
 		//１件登録。登録、更新、削除はupdateを使う。第一引数はSQL、第二はPreparedStatement。
 		String sql = "INSERT INTO ITEM(name, unitPrice, count, IsPr, RecordDate)"
 				+ "VALUES(?, ?, ?, ?, ?)";
-		jdbc.update(sql,
-				bean.getName(),
-				bean.getUnitPrice(),
-				bean.getCount(),
-				bean.getIsPr(),
-				bean.getRecordDate());
+		result = jdbc.update(sql,
+				dto.getName(),
+				dto.getUnitPrice(),
+				dto.getCount(),
+				dto.getIsPr(),
+				dto.getRecordDate());
+
+		return result;
 
 	}
 
-	public List<Bean> search() {
+	public List<ItemDto> searchALL() {
 		String sql = "SELECT * FROM ITEM";
 		List<Map<String, Object>> searcheALL = jdbc.queryForList(sql);
 
-		List<Bean> serchList = new ArrayList<>();
+		List<ItemDto> serchList = new ArrayList<>();
 		for (Map<String, Object> search : searcheALL) {
-			Bean bean = new Bean();
-			bean.setCode((int) search.get("CODE"));
-			bean.setName((String) search.get("NAME"));
-			bean.setUnitPrice((int) search.get("UNITPRICE"));
-			bean.setCount((int) search.get("COUNT"));
-			bean.setIsPr((int) search.get("ISPR"));
-			bean.setRecordDate((Date) search.get("RECORDDATE"));
-
-			serchList.add(bean);
+			ItemDto dto = new ItemDto();
+			dto.setCode((int) search.get("CODE"));
+			dto.setName((String) search.get("NAME"));
+			dto.setUnitPrice((int) search.get("UNITPRICE"));
+			dto.setCount((int) search.get("COUNT"));
+			dto.setIsPr((int) search.get("ISPR"));
+			dto.setRecordDate(((Timestamp) search.get("RECORDDATE")).toLocalDateTime());
+			
+			serchList.add(dto);
 
 		}
 
@@ -61,21 +63,24 @@ public class DrinkMachine1Dao {
 
 	}
 
-	public Bean searchOne(int code) throws DataAccessException {
+	public List<ItemDto> searchOne(int code) throws DataAccessException {
+
+		List<ItemDto> serchList = new ArrayList<>();
+		ItemDto dto = new ItemDto();
 
 		String sql = "SELECT code, name, unitPrice, count, IsPr, RecordDate " + "FROM ITEM " + "WHERE code = " + code;
 
 		//		queryForMap 結果マップのクエリを実行
 		Map<String, Object> searcheOne = jdbc.queryForMap(sql);
-		Bean bean = new Bean();
-		bean.setCode((int) searcheOne.get("CODE"));
-		bean.setName((String) searcheOne.get("NAME"));
-		bean.setUnitPrice((int) searcheOne.get("UNITPRICE"));
-		bean.setCount((int) searcheOne.get("COUNT"));
-		bean.setIsPr((int) searcheOne.get("ISPR"));
-		bean.setRecordDate((Date) searcheOne.get("RECORDDATE"));
+		dto.setCode((int) searcheOne.get("CODE"));
+		dto.setName((String) searcheOne.get("NAME"));
+		dto.setUnitPrice((int) searcheOne.get("UNITPRICE"));
+		dto.setCount((int) searcheOne.get("COUNT"));
+		dto.setIsPr((int) searcheOne.get("ISPR"));
+		dto.setRecordDate(((Timestamp) searcheOne.get("RECORDDATE")).toLocalDateTime());
 
-		return bean;
+		serchList.add(dto);
+		return serchList;
 	}
 
 	public int delete(int code) throws DataAccessException {
@@ -87,18 +92,26 @@ public class DrinkMachine1Dao {
 		return rowNumber;
 	}
 
-	public int update(Bean bean) throws DataAccessException {
+	public int update(ItemDto dto) throws DataAccessException {
 
-		String sql = "UPDATE ITEM SET name = ?, unitPrice = ?, count = ?, isPr = ?, recordDate = ? WHERE code = " + bean.getCode();
+		String sql = "UPDATE ITEM SET name = ?, unitPrice = ?, count = ?, isPr = ?, recordDate = ? WHERE code = ?;";
 		//１件更新
 		int rowNumber = jdbc.update(sql,
-				bean.getName(),
-				bean.getUnitPrice(),
-				bean.getCount(),
-				bean.getIsPr(),
-				bean.getRecordDate());
-
+				dto.getName(),
+				dto.getUnitPrice(),
+				dto.getCount(),
+				dto.getIsPr(),
+				dto.getRecordDate(),
+				dto.getCode());
+		
 		return rowNumber;
 	}
+	
+//	public void update(ItemDto dto) {
+//		jdbc.update("UPDATE ITEM SET name = ?, count = ?, unitPrice = ?, IsPr = ? WHERE code = ?",
+//				dto.getName(), dto.getCount(), dto.getUnitPrice(),  dto.getIsPr(), dto.getCode() );		
+	
+	
+	
 
 }
